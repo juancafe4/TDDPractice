@@ -1,59 +1,22 @@
+/*
+  @author: JUAN CARLOS FERREL
+  02/04/2018
+ */
+
+const { AND, HUNGRED } = require('./constants');
+const { getDigitName, getTenthDigitName } = require('./lookup');
+
 module.exports = class Converter {
-  static getDigitName(digit) {
-    switch(digit) {
-      case 0:
-        return '';
-      case 1:
-        return 'ONE';
-      case 2:
-        return 'TWO';
-      case 3:
-        return 'THREE';
-      case 4:
-        return 'FOUR';
-      case 5:
-        return 'FIVE';
-      case 6:
-        return 'SIX';
-      case 7:
-        return 'SEVEN';
-      case 8:
-        return 'EIGHTT';
-      case 9:
-        return 'NINE';
+  static convertNumberToString(input) {
+    this._initialize(input);
+    this._validateInput();
+    while (this.number > 0) {
+      this._concatenateStringValues();
+      this._reduceValues();
     }
-  }
-  static getTenthDigitName(digit) {
-    switch(digit) {
-      case 0:
-        return '';
-      case 1:
-        return 'TEN';
-      case 2:
-        return 'TWENTY';
-      case 3:
-        return 'THRTY';
-      case 4:
-        return 'FOURTY';
-      case 5:
-        return 'FIFTY';
-      case 6:
-        return 'SIXTY';
-      case 7:
-        return 'SEVENTY';
-      case 8:
-        return 'EIGHTT';
-      case 9:
-        return 'NINETY';
-    }
+    return this.result.trim();
   }
 
-  static get AND() {
-    return 'AND ';
-  }
-  static get HUNGRED() {
-    return 'HUNGRED '
-  }
   static _initialize(input) {
     this.input = input;
     this.number = Number(input);
@@ -64,46 +27,39 @@ module.exports = class Converter {
     if (isNaN(this.input)) {
       throw 'Input is not a number';
     }
-    if (this.number > 999|| this.number <= 0) {
+    if (this.number > 999 || this.number <= 0) {
       throw 'Out of range';
     }
   }
+  static _concatenateStringValues() {
+    this._getStringDigitName();
+  }
+  static _reduceValues() {
+    this.number = this.number % this.divider;
+    this.divider /= 10;
+  }
   static _getStringDigitName() {
     const divisionResult = Math.floor(this.number / this.divider);
-
     if (divisionResult !== 0) {
-      if (this.divider === 10) {
-        return this.getTenthDigitName(divisionResult) + ' ';
-      } else {
-        return this.getDigitName(divisionResult) + ' ';
-      }
-      this.result += this._addExraStrings();
+      this._addDigit(divisionResult);
+      this._addExraStrings();
+    }
+  }
+
+  static _addDigit(divisionResult) {
+    if (this.divider === 10) {
+      this.result += getTenthDigitName(divisionResult) + ' ';
+    } else {
+      this.result += getDigitName(divisionResult) + ' ';
     }
   }
   static _addExraStrings() {
     const remainderResult = this.number % this.divider;
     if (this.divider === 100) {
-      return this.HUNGRED;
+      this.result += HUNGRED;
     }
-    if (this.remainderResult !== 0 && this.divider === 100) {
-      return this.AND;
+    if (remainderResult !== 0 && this.divider === 100) {
+      this.result += AND;
     }
   }
-
-  static _concatenateStringValues() {
-    this.result += this._getStringDigitName();
-  }
-  static _reduceValues() {
-    this.number =  this.number % this.divider;
-    this.divider /= 10;
-  }
-  static convertNumberToString(input) {
-    this._initialize(input);
-    this._validateInput();
-    while (this.number > 0) {
-      this._concatenateStringValues();
-      this._reduceValues();
-    }
-    return this.result;
-  }
-}
+};
