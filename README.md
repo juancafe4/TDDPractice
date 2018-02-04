@@ -17,7 +17,7 @@ $ nvm install stable
 This will install the most recent NodeJS and NMP stable version.
 ## Getting Started
 
-To run our repo, run the following in your terminal:
+To run this repo, run the following in your terminal:
 
 Clone.
 
