@@ -7,13 +7,14 @@ NodeJS & NPM
 ```
 If you do not have npm and node installed. Follow this tutorial.
 
-* [How to install NVM](https://github.com/creationix/nvm)
+* [How to install NVM (MacOS)](https://github.com/creationix/nvm)
 
 Then in your terminal run:
 
 ```
 $ nvm install stable
 ```
+This will install the most recent NodeJS and NMP stable version.
 ## Getting Started
 
 To run our repo, run the following in your terminal:
@@ -21,30 +22,25 @@ To run our repo, run the following in your terminal:
 Clone.
 
 ```
-$ git clone https://github.com/juancafe4/StarTrekChallenge
+$ git clone https://github.com/juancafe4/TDDPractice
 ```
 
 Navigate into cloned directory and install npm packages.
 
 ```
-$ cd StarTrekChallenge
+$ cd TDDPractice
 $ npm install
 ```
-To start the server:
-```
-npm start
-```
-
-In your browser go to:
+To run all the tests
 
 ```
-http://localhost:8000
+$ npm test
 ```
 
 ## Built With
 
-* [React.js](https://facebook.github.io/react/)
 * [Node.js](https://nodejs.org/en/)
-* [Express](https://expressjs.com/)
-* [Webpack](https://webpack.github.io/)
-* [Bootstrap](http://getbootstrap.com/)
+* [Mocha](https://mochajs.org/)
+* [Chai.js](http://chaijs.com/)
+* [ESLint](https://eslint.org/)
+
