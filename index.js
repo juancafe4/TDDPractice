@@ -70,10 +70,14 @@ module.exports = class Converter {
   }
   static _getStringDigitName() {
     const divisionResult = Math.floor(this.number / this.divider);
-    if (this.divider === 10) {
-      return lookupDec[divisionResult] + ' ';
-    } else {
-      return this.getDigitName(divisionResult) + ' ';
+
+    if (divisionResult !== 0) {
+      if (this.divider === 10) {
+        return this.getTenthDigitName(divisionResult) + ' ';
+      } else {
+        return this.getDigitName(divisionResult) + ' ';
+      }
+      this.result += this._addExraStrings();
     }
   }
   static _addExraStrings() {
@@ -88,7 +92,6 @@ module.exports = class Converter {
 
   static _concatenateStringValues() {
     this.result += this._getStringDigitName();
-    this.result += this._addExraStrings();
   }
   static _reduceValues() {
     this.number =  this.number % this.divider;
